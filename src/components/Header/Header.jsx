@@ -7,7 +7,7 @@ const Header = (props) => {
        <header>
            <div className={style.wrapper}>
                <div className={style.logo}>
-                   <img src="./img/logo1.png" alt="logo" />
+                   <img src="./img/logo.jpg" alt="logo" />
                </div>
                <nav>
                     <ul className={style.links}>

@@ -1,7 +1,9 @@
 header {
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(6px);
+
     .wrapper {
-        height: 50px;
+        height: 7vh;
         color: white;
         display: flex;
         align-items: center;
@@ -10,7 +12,7 @@ header {
             margin: 0 420px 0 100px;
 
             img {
-                height: 50px;
+                max-height: 7vh;
             }
         }
 
