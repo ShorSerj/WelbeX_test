@@ -1,0 +1,26 @@
+header {
+    background-color: black;
+    .wrapper {
+        height: 50px;
+        color: white;
+        display: flex;
+        align-items: center;
+
+        .logo {
+            margin: 0 420px 0 100px;
+
+            img {
+                height: 50px;
+            }
+        }
+
+        .links {
+            display: flex;
+            font-size: 20px;
+
+            li {
+                margin-right: 70px;
+            }
+        }
+    }
+}
