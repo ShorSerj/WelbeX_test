@@ -9,10 +9,9 @@ const TOOGLE_IS_FETCHING = 'TOOGLE_IS_FETCHING'
 
 let initialState = {
     tasks: [],
-    // pageSize: 4,
+    pageSize: 4,
     // totalUsersCount: 1,
     // currentPage: 1,
-    // isFetching: false
     userId: 1
 }
 
@@ -55,29 +54,13 @@ export const followSucces = (userId) => ({type: FOLLOW, userId})
 export const unfollow = (userId) => ({type: UNFOLLOW, userId})
 export const toogleIsFetching = (isFetching) => ({type: TOOGLE_IS_FETCHING, isFetching})
 
-export const getTasks =  (userId = 1) => async dispatch => {
-            dispatch(setCurrentPage(userId))
-            let response = await todosAPI.getTasks(userId)
+export const getTasks =  () => async dispatch => {
+            let response = await todosAPI.getTasks()
             dispatch(setTasks(response.data))
 }
+
     
 
-export const follow = (userId) => async (dispatch) => {
-        dispatch(toogleIsFetching(true))
-        await usersAPI.followUser(userId)
-            dispatch(toogleIsFetching(false))
-            dispatch(followSucces(userId))
-}
-// export const unfollow = (userId) => {
-//     return (dispatch) => {
-//         dispatch(toogleIsFetching(true))
-//         usersAPI.followUser(userId)
-//           .then((response) => {
-//             dispatch(toogleIsFetching(false))
-//             dispatch(followSucces(userId))
-//           })
-//     } 
-// }
-//TODO need add thunk unfollow, lesson 90
+
 
 export default tasksReducer

@@ -1,25 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import Paginator from '../common/Paginator/Paginator.jsx';
+import Column from './Column/Column.jsx';
 import style from './ToDo.module.scss'
 
-const ToDo = (props) => {
-    console.log(props.tasks)
+const ToDo = ({totalUsersCount, pageSize, tasks}) => {
+
+    const viewColumns = () => {
+        return tasks.map((item, index)=>{
+            console.log('item', item[0])
+            return <Column tasks = {item} title={`User: ${item.userId}`} key={index}/>         
+        })
+    }
+    
     return(
-        <main>
-            <div className={style.users}>
-                <button className={style.user}>User_1</button>
-                <button className={style.user}>User_2</button>
-                <button className={style.user}>User_3</button>
-            </div>
-            <div className={style.ToDoList}>
-                <div className={style.block}>{props.tasks.map((item)=> {
-                    if(item.completed){
-                       return <div className={style.task} key={item.id}>{item.title}</div>
-                    }
-                })
-                }</div>
-                <div className={style.block}>Block 2</div>
-                <div className={style.block}>Block 3</div>
-            </div>
+        <main className={style.toDO__wrapper}>
+            <div className={style.leftSide}>
+                <Paginator totalUsersCount={totalUsersCount} pageSize={pageSize}/>
+                <div className={style.toDoList}>
+                    {tasks[0] && viewColumns()}
+                </div> 
+            </div>          
         </main>
     )
 }
