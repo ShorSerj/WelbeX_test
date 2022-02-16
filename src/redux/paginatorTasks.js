@@ -1,5 +1,3 @@
-import {setTotalUsersCount} from './tasks-reducer.js'
-
 const paginatorTasks = (tasks, pageSize=4, currentPage=1) => {
     let firstId = pageSize*(currentPage-1)+1
     let lastId = pageSize*currentPage

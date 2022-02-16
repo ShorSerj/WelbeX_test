@@ -1,6 +1,7 @@
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import thunkMiddlware from 'redux-thunk'
-import tasksReducer from "./tasks-reducer.js";
+import tasksReducer from "./tasks-reducer";
+
 
 
 let reduces = combineReducers({

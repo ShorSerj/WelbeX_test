@@ -1,21 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect} from 'react';
 import ToDo from './ToDo.jsx'
 import { connect } from 'react-redux'
-import {getTasks} from '../../redux/tasks-reducer.js'
+import {getTasks, getAllTasks} from '../../redux/tasks-reducer.js'
 
-const ToDoContainer = ({getTasks, tasks, pageSize, totalUsersCount}) => {
+const ToDoContainer = ({getTasks, getAllTasks, tasks, pageSize, allTasks, totalUsersCount}) => {
     useEffect( () => {
-      getTasks()    
-    }, [])   
+      getAllTasks()
+      getTasks(allTasks)    
+    }, [JSON.stringify(allTasks)])   
+
+    const onCurrentPage = (pageNumber) => {
+      getTasks(allTasks, pageSize, pageNumber)
+    }
     
     return(
-      <ToDo tasks={tasks} pageSize={pageSize} ></ToDo>
+      <ToDo tasks={tasks} pageSize={pageSize} totalUsersCount={totalUsersCount} onCurrentPage={onCurrentPage}></ToDo>
     )
 }
 
 let mapStateToProps = (state) => {
   return {
     tasks: state.tasks.tasks,
+    allTasks: state.tasks.allTasks,
     pageSize: state.tasks.pageSize,
     totalUsersCount: state.tasks.totalUsersCount
   }
@@ -23,4 +29,4 @@ let mapStateToProps = (state) => {
 
 
 
-export default connect(mapStateToProps, {getTasks})(ToDoContainer)
+export default connect(mapStateToProps, {getTasks, getAllTasks})(ToDoContainer)

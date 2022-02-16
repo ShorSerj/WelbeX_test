@@ -11,12 +11,7 @@ const Paginator = ({totalUsersCount,pageSize, currentPage=1, onCurrentPage}) => 
     <div className={style.users}>
       {pages.map((p, index) => {
         return (
-          <button className={style.user} key={index}>Page: {p}</button>
-          // <span 
-          //   className={currentPage === p && s.selectedPage}
-          //   // onClick={(e) => {
-          //   //   onCurrentPage(p)
-          //   // }}
+          <button className={style.user + ' ' + (currentPage === p && style.selectedPage) } key={index} onClick={(e) => {onCurrentPage(p)}}>Page: {p}</button>
         )
       })}
     </div>
