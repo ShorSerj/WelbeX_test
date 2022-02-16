@@ -1,10 +1,16 @@
-const pageContent = (tasks, pageSize, currentPage=2) => {
+import {setTotalUsersCount} from './tasks-reducer.js'
+
+const paginatorTasks = (tasks, pageSize=4, currentPage=1) => {
     let firstId = pageSize*(currentPage-1)+1
     let lastId = pageSize*currentPage
     let currentId = firstId
+    let count = 0
     let tasksArr = [[]]
     let indexArr = 0
+    let output = {}
+
     tasks.map((item)=> {
+        item.userId > count ? count = item.userId : null
         if(item.userId >= firstId & item.userId <= lastId){
             if(item.userId == currentId){
                 tasksArr[indexArr].push(item)
@@ -13,14 +19,15 @@ const pageContent = (tasks, pageSize, currentPage=2) => {
                 indexArr++
                 currentId++
                 tasksArr[indexArr].push(item)
-            }else{
-                return
             }
         }
-        // item.userId > totalUsersCount ? totalUsersCount = item.userId : null
     })
+
     return(
-        tasksArr
+        output = {
+            count,
+            tasksArr 
+        }
     )
 }
-export default pageContent
+export default paginatorTasks

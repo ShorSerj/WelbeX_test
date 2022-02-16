@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import ToDo from './ToDo.jsx'
 import { connect } from 'react-redux'
-import {getTasks, setTasks} from '../../redux/tasks-reducer.js'
-import pageContent from '../common/pageContent/pageContent.js'
+import {getTasks} from '../../redux/tasks-reducer.js'
 
-const ToDoContainer = ({getTasks, tasks, pageSize, setTasks, ...props}) => {
+const ToDoContainer = ({getTasks, tasks, pageSize, totalUsersCount}) => {
     useEffect( () => {
-      getTasks() 
-       
-    }, [])    
-    setTasks(pageContent(tasks))   
+      getTasks()    
+    }, [])   
+    
     return(
-      <ToDo  pageSize={pageSize} ></ToDo>
+      <ToDo tasks={tasks} pageSize={pageSize} ></ToDo>
     )
 }
 
@@ -19,9 +17,10 @@ let mapStateToProps = (state) => {
   return {
     tasks: state.tasks.tasks,
     pageSize: state.tasks.pageSize,
+    totalUsersCount: state.tasks.totalUsersCount
   }
 }
 
 
 
-export default connect(mapStateToProps, {getTasks, setTasks})(ToDoContainer)
+export default connect(mapStateToProps, {getTasks})(ToDoContainer)

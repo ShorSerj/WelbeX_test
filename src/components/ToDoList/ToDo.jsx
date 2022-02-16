@@ -4,11 +4,10 @@ import Column from './Column/Column.jsx';
 import style from './ToDo.module.scss'
 
 const ToDo = ({totalUsersCount, pageSize, tasks}) => {
-
+    
     const viewColumns = () => {
         return tasks.map((item, index)=>{
-            console.log('item', item[0])
-            return <Column tasks = {item} title={`User: ${item.userId}`} key={index}/>         
+            return <Column tasks = {item} key={index}/>         
         })
     }
     
