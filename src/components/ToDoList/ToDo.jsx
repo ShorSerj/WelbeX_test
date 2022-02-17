@@ -3,21 +3,19 @@ import Paginator from '../common/Paginator/Paginator.jsx';
 import Column from './Column/Column.jsx';
 import style from './ToDo.module.scss'
 
-const ToDo = ({totalUsersCount, pageSize, tasks, onCurrentPage}) => {
+const ToDo = ({totalUsersCount, pageSize, tasks, onCurrentPage, currentPage, onDeleteTask, addTask}) => {
     
     const viewColumns = () => {
         return tasks.map((item, index)=>{
-            return <Column tasks = {item} key={index}/>         
+            return <Column tasks = {item} key={index} addTask={addTask}/>         
         })
     }
     
     return(
         <main className={style.toDO__wrapper}>
-            <div className={style.leftSide}>
-                <Paginator totalUsersCount={totalUsersCount} pageSize={pageSize} onCurrentPage={onCurrentPage}/>
-                <div className={style.toDoList}>
-                    {tasks[0] && viewColumns()}
-                </div> 
+            <Paginator totalUsersCount={totalUsersCount} pageSize={pageSize} onCurrentPage={onCurrentPage} currentPage={currentPage}/>
+            <div className={style.toDoList}>
+                {tasks[0] && viewColumns()}
             </div>          
         </main>
     )

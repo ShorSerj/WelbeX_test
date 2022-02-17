@@ -1,26 +1,7 @@
 .toDO__wrapper {
     display: flex;
-    justify-content: center;
-
-    .users {
-        display: flex;
-        text-align: center;
-        margin-top: 20px;
-        margin-left: 20px;
-
-
-        .user {
-            background-color: rgba(255, 255, 255, 0.2);
-            margin: 0 5px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            padding: 8px 20px;
-            font-size: 16px;
-            border-radius: 5px;
-        }
-    }
+    align-items: center;
+    flex-direction: column;
 
     .toDoList {
         margin-top: 20px;
@@ -28,4 +9,9 @@
         margin-left: 12px;
         padding-bottom: 10px;
     }
+
+    .contextMenu{
+        background-color: white;
+    }
+
 }

@@ -14,10 +14,9 @@ const TOOGLE_IS_FETCHING = 'TOOGLE_IS_FETCHING'
 let initialState = {
     allTasks: [],
     tasks: [],
-    pageSize: 4,
+    pageSize: 5,
     totalUsersCount: 1,
-    // currentPage: 1,
-    userId: 1
+    currentPage: 1,
 }
 
 const tasksReducer = (state = initialState, action) => {
@@ -29,7 +28,7 @@ const tasksReducer = (state = initialState, action) => {
             return {...state, tasks: action.tasks}
         }
         case SET_CURRENT_PAGE:{
-            return {...state, userId: action.userId}
+            return {...state, currentPage: action.currentPage}
         }
         case SET_TOTAL_USERS_COUNT: {
             return {...state, totalUsersCount: action.count}
@@ -40,28 +39,24 @@ const tasksReducer = (state = initialState, action) => {
 
 export const setAllTasks = (tasks) => ({type: SET_ALL_TASKS, tasks})
 export const setTasks = (tasks) => ({type: SET_TASKS, tasks})
-export const setCurrentPage = (userId) => ({type: SET_CURRENT_PAGE, userId})
+export const setCurrentPage = (currentPage) => ({type: SET_CURRENT_PAGE, currentPage})
 export const setTotalUsersCount = (count) => ({type: SET_TOTAL_USERS_COUNT, count})
-
-// export const followSucces = (userId) => ({type: FOLLOW, userId})
-// export const unfollow = (userId) => ({type: UNFOLLOW, userId})
-// export const toogleIsFetching = (isFetching) => ({type: TOOGLE_IS_FETCHING, isFetching})
 
 export const getAllTasks = () => async dispatch => {
     let response = await todosAPI.getTasks()
-    console.log(response.data)
     dispatch(setAllTasks(response.data))
 }
 
-export const getTasks = (allTasks, pageSize=4, currentPage=1) => dispatch => {
-            let data = paginatorTasks(allTasks, pageSize, currentPage)
-            dispatch(setTasks(data.tasksArr))
-            dispatch(setTotalUsersCount(data.count))
+export const getTasks = (allTasks, pageSize=5, currentPage) => dispatch => {
+    dispatch(setCurrentPage(currentPage))
+    let data = paginatorTasks(allTasks, pageSize, currentPage)
+    dispatch(setTasks(data.tasksArr))
+    dispatch(setTotalUsersCount(data.count))
 }
 
-
-    
-
-
+export const addTask = (userId, title) => async dispatch => {
+    let response = await todosAPI.addTask(userId, title)
+    alert('Карточка создана ' + JSON.stringify(response.data))
+}
 
 export default tasksReducer
