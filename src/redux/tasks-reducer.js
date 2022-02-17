@@ -17,6 +17,7 @@ let initialState = {
     pageSize: 5,
     totalUsersCount: 1,
     currentPage: 1,
+    addMode:null,
 }
 
 const tasksReducer = (state = initialState, action) => {
@@ -57,6 +58,15 @@ export const getTasks = (allTasks, pageSize=5, currentPage) => dispatch => {
 export const addTask = (userId, title) => async dispatch => {
     let response = await todosAPI.addTask(userId, title)
     alert('Карточка создана ' + JSON.stringify(response.data))
+}
+export const editTask = (userId, id, title) => async dispatch => {
+    let response = await todosAPI.editTask(userId, id, title)
+    alert('Карточка изменена ' + JSON.stringify(response.data))
+}
+
+export const deleteTask = (id) => async dispatch => {
+    let response = await todosAPI.deleteTask(id)
+    alert('Карточка удалена, Code:' + (response.status))
 }
 
 export default tasksReducer

@@ -34,19 +34,24 @@
             align-items: center;
             justify-content: space-between;
             display: flex;
-            flex-direction: column;
+            position: relative;
 
-            span {
+            .status {
                 color: #7ed000;
+                margin-top: 27px;
             }
 
             label {
                 word-wrap: break-word;
                 min-height: 50px;
                 width: 100%;
+
+                span {
+                    border-left: 2px solid black;
+                }
             }
 
-            textarea {
+            input {
                 position: absolute;
                 width: 1px;
                 height: 1px;
@@ -65,10 +70,40 @@
                 color: #fff;
                 border-radius: 3px;
             }
-            
-            .edit{
 
+            .edit,
+            .delete {
+                opacity: 0;
+                position: absolute;
+                right: 2px;
+                top: 1px;
+                padding: 5px;
+                transition: 0.5s;
+
+                &:hover {
+                    background-color: #ebecf0;
+                }
             }
+
+            .edit {
+                right: 25px;
+            }
+
+            p {
+                width: 160px;
+            }
+
+            &:hover {
+
+                .edit,
+                .delete {
+                    opacity: 1;
+                }
+            }
+        }
+
+        .newTask {
+            flex-direction: column;
         }
     }
 

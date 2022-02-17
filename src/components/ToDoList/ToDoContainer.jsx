@@ -1,9 +1,9 @@
 import React, { useEffect} from 'react';
 import ToDo from './ToDo.jsx'
 import { connect } from 'react-redux'
-import {getTasks, getAllTasks, addTask} from '../../redux/tasks-reducer.js'
+import {getTasks, getAllTasks, addTask, editTask, deleteTask} from '../../redux/tasks-reducer.js'
 
-const ToDoContainer = ({getTasks, getAllTasks, tasks, pageSize, allTasks, totalUsersCount, currentPage, addTask}) => {
+const ToDoContainer = ({getTasks, getAllTasks, tasks, pageSize, allTasks, totalUsersCount, currentPage, addTask, addMode, editTask, deleteTask}) => {
     useEffect( () => {
       getAllTasks()
       getTasks(allTasks)    
@@ -18,7 +18,7 @@ const ToDoContainer = ({getTasks, getAllTasks, tasks, pageSize, allTasks, totalU
     }
 
     return(
-      <ToDo tasks={tasks} pageSize={pageSize} totalUsersCount={totalUsersCount} onCurrentPage={onCurrentPage} currentPage={currentPage} onDeleteTask={onDeleteTask} addTask={addTask}></ToDo>
+      <ToDo tasks={tasks} pageSize={pageSize} totalUsersCount={totalUsersCount} onCurrentPage={onCurrentPage} currentPage={currentPage} onDeleteTask={onDeleteTask} addTask={addTask} addMode={addMode} editTask={editTask} deleteTask={deleteTask}></ToDo>
     )
 }
 
@@ -28,8 +28,9 @@ let mapStateToProps = (state) => {
     allTasks: state.tasks.allTasks,
     pageSize: state.tasks.pageSize,
     currentPage: state.tasks.currentPage,
-    totalUsersCount: state.tasks.totalUsersCount
+    totalUsersCount: state.tasks.totalUsersCount,
+    addMode: state.tasks.addMode,
   }
 }
 
-export default connect(mapStateToProps, {getTasks, getAllTasks,addTask})(ToDoContainer)
+export default connect(mapStateToProps, {getTasks, getAllTasks, addTask, editTask, deleteTask})(ToDoContainer)
