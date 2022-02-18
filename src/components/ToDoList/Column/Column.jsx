@@ -1,18 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import style from './Column.module.scss'
+import Task from './Task/Task.jsx';
 
 const Column = ({tasks, addTask, editTask, deleteTask}) => {
     const [addMode, setAddMode] = useState(false)
     const [focus, setFocus] = useState(true)
-    // const [editMode, seteditMode] = useState(false)
-    const [editMode, seteditMode] = useState(false)
+    const [editMode, setEditMode] = useState(false)
     const [content, setContent] = useState('')
-
+   
     const userId = tasks[0]?.userId
-    
-    const onContentChange = (e) =>{
-        setContent(e.currentTarget.value)
-    }
 
     const onAddTasks = (userId) =>{
         addTask(userId, content)
@@ -22,26 +18,17 @@ const Column = ({tasks, addTask, editTask, deleteTask}) => {
 
     const onEditTasks  = (userId) =>{
         editTask(userId, editMode, content)
-        seteditMode(false)
+        setEditMode(false)
         setContent('')
     }
     
-    const onCloseForm = () => {
+    const onCloseForm = (mode) => {
         setFocus(false)
         setTimeout(() => {
-            setAddMode(false)
+            mode == 'edit' ? setEditMode(null) : setAddMode(false)
             setContent('')
             }, 200);
-    }
-
-    const onCloseFormEdit = () => {
-        setFocus(false)
-        setTimeout(() => {
-            seteditMode(null)
-            setContent('')
-            }, 200);
-    }
-    
+    }    
 
     return(
         <div className={style.block}>
@@ -50,44 +37,15 @@ const Column = ({tasks, addTask, editTask, deleteTask}) => {
                 {
                     tasks.map((item) =>{
                         if(editMode !== item.id){
-                            return <div className={style.task} key={item.id}> 
-                            <p>{item.title}</p>
-                            <span className={style.edit} onClick={()=> {
-                                seteditMode(true)
-                                seteditMode(item.id)
-                                setContent(item.title)
-                            }}>&#9998;</span>
-                            <span className={style.delete} onClick={()=>deleteTask(item.id)}>	
-                            &#9249;</span>
-                            { item.completed && <span className={style.status}>Completed</span>}
-                            </div>
+                            return <Task setEditMode={setEditMode} setContent={setContent} deleteTask={deleteTask} item={item} key={item.id}/>
                         }else {
-                            return <div className={style.task + ' ' + style.newTask} onBlur={() => onCloseFormEdit()} key={item.id}>
-                                <label htmlFor="taskText">
-                                    {content}
-                                    {focus && <span>&nbsp;</span>}
-                                </label>
-                                <input autoFocus={true} id='taskText' type="text"  onChange={onContentChange} 
-                                onFocus={()=> setFocus(true)} value={content}
-                                />
-                                <button className={style.task__button}  onClick={()=>onEditTasks(userId)}>Изменить карту</button>
-                            </div> 
-                        }
-                        
+                            return <Task setEditMode={setEditMode} setContent={setContent} deleteTask={deleteTask} item={item} key={item.id} editMode={editMode} content={content} setFocus={setFocus} onCloseForm={onCloseForm} onAddTasks={onAddTasks} onEditTasks={onEditTasks}/>
+                        } 
                     })  
                 } 
                 {addMode && 
-                    <div className={style.task + ' ' + style.newTask} onBlur={() => onCloseForm()} >
-                        <label htmlFor="taskText">
-                            {content}
-                            {focus && <span>&nbsp;</span>}
-                        </label>
-                        <input autoFocus={true} id='taskText' type="text"  onChange={onContentChange} 
-                        onFocus={()=> setFocus(true)}
-                        />
-                        <button className={style.task__button}  onClick={()=>onAddTasks(userId)}>Добавить карту</button>
-                    </div> 
-                } 
+                    <Task addMode={addMode} setFocus={setFocus} setContent={setContent} content={content} onCloseForm={onCloseForm} onAddTasks={onAddTasks}/>
+                }
             </div>
             <button className={style.addTask} onClick={()=>setAddMode(true)}>Добавить задачу</button>
         </div>
