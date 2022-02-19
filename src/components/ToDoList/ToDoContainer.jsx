@@ -1,13 +1,14 @@
 import React, { useEffect} from 'react';
 import ToDo from './ToDo.jsx'
 import { connect } from 'react-redux'
+import Preloader from '../common/Preloader/Preloader.js';
 import {getTasks, getAllTasks, addTask, editTask, deleteTask} from '../../redux/tasks-reducer.js'
 
-const ToDoContainer = ({getTasks, getAllTasks, tasks, pageSize, allTasks, totalUsersCount, currentPage, addTask, addMode, editTask, deleteTask}) => {
+const ToDoContainer = ({getTasks, getAllTasks, tasks, pageSize, allTasks, totalUsersCount, currentPage, addTask, addMode, editTask, deleteTask, isFetching}) => {
     useEffect( () => {
       getAllTasks()
       getTasks(allTasks)    
-    }, [JSON.stringify(allTasks)])   
+    }, [JSON.stringify(allTasks), totalUsersCount])   
 
     const onCurrentPage = (pageNumber) => {
       getTasks(allTasks, pageSize, pageNumber)
@@ -17,8 +18,11 @@ const ToDoContainer = ({getTasks, getAllTasks, tasks, pageSize, allTasks, totalU
       getTasks(allTasks, pageSize, pageNumber)
     }
 
+    if (isFetching) {
+      return <Preloader />
+    }
     return(
-      <ToDo tasks={tasks} pageSize={pageSize} totalUsersCount={totalUsersCount} onCurrentPage={onCurrentPage} currentPage={currentPage} onDeleteTask={onDeleteTask} addTask={addTask} addMode={addMode} editTask={editTask} deleteTask={deleteTask}></ToDo>
+        <ToDo tasks={tasks} pageSize={pageSize} totalUsersCount={totalUsersCount} onCurrentPage={onCurrentPage} currentPage={currentPage} onDeleteTask={onDeleteTask} addTask={addTask} addMode={addMode} editTask={editTask} deleteTask={deleteTask} isFetching={isFetching}></ToDo>
     )
 }
 
@@ -30,6 +34,7 @@ let mapStateToProps = (state) => {
     currentPage: state.tasks.currentPage,
     totalUsersCount: state.tasks.totalUsersCount,
     addMode: state.tasks.addMode,
+    isFetching: state.tasks.isFetching, 
   }
 }
 

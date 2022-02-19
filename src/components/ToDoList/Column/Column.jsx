@@ -7,7 +7,11 @@ const Column = ({tasks, addTask, editTask, deleteTask}) => {
     const [focus, setFocus] = useState(true)
     const [editMode, setEditMode] = useState(false)
     const [content, setContent] = useState('')
-   
+
+    useEffect( () => {
+
+      }, [setContent, setAddMode, setEditMode])  
+
     const userId = tasks[0]?.userId
 
     const onAddTasks = (userId) =>{
@@ -39,12 +43,12 @@ const Column = ({tasks, addTask, editTask, deleteTask}) => {
                         if(editMode !== item.id){
                             return <Task setEditMode={setEditMode} setContent={setContent} deleteTask={deleteTask} item={item} key={item.id}/>
                         }else {
-                            return <Task setEditMode={setEditMode} setContent={setContent} deleteTask={deleteTask} item={item} key={item.id} editMode={editMode} content={content} setFocus={setFocus} onCloseForm={onCloseForm} onAddTasks={onAddTasks} onEditTasks={onEditTasks}/>
+                            return <Task setEditMode={setEditMode} setContent={setContent} deleteTask={deleteTask} item={item} key={item.id} editMode={editMode} content={content} setFocus={setFocus} onCloseForm={onCloseForm} onAddTasks={onAddTasks} onEditTasks={onEditTasks} focus={focus}/>
                         } 
                     })  
                 } 
                 {addMode && 
-                    <Task addMode={addMode} setFocus={setFocus} setContent={setContent} content={content} onCloseForm={onCloseForm} onAddTasks={onAddTasks}/>
+                    <Task addMode={addMode} setFocus={setFocus} setContent={setContent} content={content} onCloseForm={onCloseForm} onAddTasks={onAddTasks} focus={focus}/>
                 }
             </div>
             <button className={style.addTask} onClick={()=>setAddMode(true)}>Добавить задачу</button>

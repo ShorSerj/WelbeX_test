@@ -4,7 +4,7 @@ import Column from './Column/Column.jsx';
 import style from './ToDo.module.scss'
 
 const ToDo = ({totalUsersCount, pageSize, tasks, onCurrentPage, currentPage, addTask, addMode,editTask,deleteTask}) => {
-    
+
     const viewColumns = () => {
         return tasks.map((item, index)=>{
             return <Column tasks = {item} key={index} addTask={addTask} addMode={addMode} editTask={editTask} deleteTask={deleteTask}/>         
